@@ -1,10 +1,20 @@
-﻿using Dalamud.Game.Command;
+using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using SamplePlugin.Windows;
+using static FFXIVClientStructs.FFXIV.Client.System.String.Utf8String.Delegates;
+using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
+using System;
+using Dalamud.Logging.Internal;
+using Dalamud.Utility;
+using System.Linq;
+using SamplePlugin.Classes;
+using CleanHuntChat.Commands;
+using System.Collections.Generic;
 
 namespace SamplePlugin;
 
@@ -13,14 +23,19 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
+    [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
 
-    private const string CommandName = "/pmycommand";
+    private const string CommandName = "/cleanhunt";
 
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("SamplePlugin");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
+
+    private readonly List<ICommand> commands;
+
+    private readonly ChatHandler chatHandler;
 
     public Plugin()
     {
@@ -35,10 +50,8 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
-        CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
-        {
-            HelpMessage = "A useful message to display in /xlhelp"
-        });
+        commands = new List<ICommand>();
+        InitializeCommands();
 
         PluginInterface.UiBuilder.Draw += DrawUI;
 
@@ -48,6 +61,8 @@ public sealed class Plugin : IDalamudPlugin
 
         // Adds another button that is doing the same but for the main ui of the plugin
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
+
+        chatHandler = new ChatHandler(this);
     }
 
     public void Dispose()
@@ -57,13 +72,36 @@ public sealed class Plugin : IDalamudPlugin
         ConfigWindow.Dispose();
         MainWindow.Dispose();
 
-        CommandManager.RemoveHandler(CommandName);
+        foreach(ICommand command in commands)
+        {
+            CommandManager.RemoveHandler(command.Name);
+            command.Dispose();
+            commands.Remove(command);
+        }
+
+        DisableChatHandler();
     }
 
-    private void OnCommand(string command, string args)
+    private void InitializeCommands()
     {
-        // in response to the slash command, just toggle the display status of our main ui
-        ToggleMainUI();
+        ICommand cleanHuntCommand = new CommandCleanHunt(this);
+        CommandManager.AddHandler(cleanHuntCommand.Name, new CommandInfo(cleanHuntCommand.OnCommand)
+        {
+            HelpMessage = cleanHuntCommand.HelpMessage
+        });
+
+        commands.Add(cleanHuntCommand);
+    }
+
+    public void EnableChatHandler()
+    {
+        DisableChatHandler();
+        ChatGui.CheckMessageHandled += chatHandler.OnChat;
+    }
+
+    public void DisableChatHandler()
+    {
+        ChatGui.CheckMessageHandled -= chatHandler.OnChat;
     }
 
     private void DrawUI() => WindowSystem.Draw();
