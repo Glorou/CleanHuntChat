@@ -5,13 +5,6 @@ using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using SamplePlugin.Windows;
-using static FFXIVClientStructs.FFXIV.Client.System.String.Utf8String.Delegates;
-using Dalamud.Game.Text;
-using Dalamud.Game.Text.SeStringHandling;
-using System;
-using Dalamud.Logging.Internal;
-using Dalamud.Utility;
-using System.Linq;
 using SamplePlugin.Classes;
 using CleanHuntChat.Commands;
 using System.Collections.Generic;
@@ -30,8 +23,8 @@ public sealed class Plugin : IDalamudPlugin
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("SamplePlugin");
+
     private ConfigWindow ConfigWindow { get; init; }
-    private MainWindow MainWindow { get; init; }
 
     private readonly List<ICommand> commands;
 
@@ -41,14 +34,9 @@ public sealed class Plugin : IDalamudPlugin
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
-        // you might normally want to embed resources and load them from the manifest stream
-        var goatImagePath = Path.Combine(PluginInterface.AssemblyLocation.Directory?.FullName!, "goat.png");
-
         ConfigWindow = new ConfigWindow(this);
-        MainWindow = new MainWindow(this, goatImagePath);
 
         WindowSystem.AddWindow(ConfigWindow);
-        WindowSystem.AddWindow(MainWindow);
 
         commands = new List<ICommand>();
         InitializeCommands();
@@ -60,7 +48,7 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
 
         // Adds another button that is doing the same but for the main ui of the plugin
-        PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
+        //PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
 
         chatHandler = new ChatHandler(this);
     }
@@ -70,7 +58,6 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.RemoveAllWindows();
 
         ConfigWindow.Dispose();
-        MainWindow.Dispose();
 
         foreach(ICommand command in commands)
         {
@@ -107,5 +94,5 @@ public sealed class Plugin : IDalamudPlugin
     private void DrawUI() => WindowSystem.Draw();
 
     public void ToggleConfigUI() => ConfigWindow.Toggle();
-    public void ToggleMainUI() => MainWindow.Toggle();
+    //public void ToggleMainUI() => MainWindow.Toggle();
 }
