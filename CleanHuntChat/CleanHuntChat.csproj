@@ -4,8 +4,8 @@
 
     <PropertyGroup>
         <Version>1.0</Version>
-        <Description>Clean Hunt Chat.</Description>
-        <PackageProjectUrl>https://github.com/goatcorp/SamplePlugin</PackageProjectUrl>
+        <Description>Clean Hunt Chat</Description>
+        <PackageProjectUrl>https://github.com/Guerzoniansus/CleanHuntChat</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
