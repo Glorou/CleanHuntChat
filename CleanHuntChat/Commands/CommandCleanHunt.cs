@@ -2,13 +2,12 @@ using SamplePlugin;
 using System;
 using System.Timers;
 
-
 namespace CleanHuntChat.Commands
 {
     public class CommandCleanHunt : ICommand
     {
         public string Name => "/cleanhunt";
-        public string HelpMessage => $"Turns {Strings.PLUGIN_NAME} on for {plugin.Configuration.EnabledDurationInMinutes} minutes. Type '{Name} off' to disable early.";
+        public string HelpMessage => $"Temporarily turns {Strings.PLUGIN_NAME} on. Type '{Name} off' to disable early.";
 
         private Plugin plugin;
         private Timer timer;

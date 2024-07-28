@@ -1,13 +1,13 @@
 {
-  "Author": "Guerzoniansus",
-  "Name": "Clean Hunt Chat",
-  "Punchline": "Temporarily filters away Shout messages that don't contain flags or instance messages. \nNo more cringe during hunt trains.",
-  "Description": "Hides shouts and yells, unless they contain flag coordinates or 'switching instance' messages.\nUse /cleanhunt to turn on for an hour.\nUse /cleanhunt off to disable early.",
-  "ApplicableVersion": "any",
-  "Tags": [
-    "hunt",
-    "hunt trains",
-    "plugin",
-    "chat"
-  ]
+    "Author": "Guerzoniansus",
+    "Name": "Clean Hunt Chat",
+    "Punchline": "No more cringe during hunt trains.\nTemporarily filters away Shouts and Yells that don't contain a flag or an instance message.",
+    "Description": "Hides shouts and yells, unless they contain flag coordinates or 'switching instance' messages.\nUse /cleanhunt to turn on for a configurable amount of time (default 1 hour).\nUse /cleanhunt off to disable early.",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "hunt",
+        "hunt trains",
+        "plugin",
+        "chat"
+    ]
 }
