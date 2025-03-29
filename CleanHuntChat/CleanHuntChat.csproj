@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="Dalamud.Plugin.Bootstrap.targets" />
+<Project Sdk="Dalamud.NET.Sdk/12.0.2">
 
     <PropertyGroup>
         <Version>1.0</Version>
@@ -10,5 +9,4 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     
-    <Import Project="$(DalamudLibPath)/targets/Dalamud.Plugin.targets"/>
 </Project>

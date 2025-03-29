@@ -7,13 +7,6 @@ namespace SamplePlugin.Classes
 {
     internal class ChatHandler
     {
-        private Plugin plugin;
-
-        public ChatHandler(Plugin plugin)
-        {
-            this.plugin = plugin;
-        }
-
         public void OnChat(XivChatType type, int timestamp, ref SeString sender, ref SeString message, ref bool isHandled)
         {
             if (IsOneOfTrackedChatTypes(type))

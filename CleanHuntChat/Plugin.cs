@@ -17,8 +17,6 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
 
-    private const string CommandName = "/cleanhunt";
-
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("SamplePlugin");
@@ -32,25 +30,21 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin()
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-
         ConfigWindow = new ConfigWindow(this);
-
         WindowSystem.AddWindow(ConfigWindow);
 
         commands = new List<ICommand>();
         InitializeCommands();
 
         PluginInterface.UiBuilder.Draw += DrawUI;
-
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
 
-        chatHandler = new ChatHandler(this);
+        chatHandler = new ChatHandler();
     }
 
     public void Dispose()
     {
         WindowSystem.RemoveAllWindows();
-
         ConfigWindow.Dispose();
 
         foreach(ICommand command in commands)
