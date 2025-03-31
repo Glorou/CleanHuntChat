@@ -1,5 +1,5 @@
 {
-    "Author": "Guerzoniansus",
+    "Author": "Guerzoniansus, Karou",
     "Name": "Clean Hunt Chat",
     "Punchline": "No more cringe during hunt trains.\nTemporarily filters away Shouts and Yells that don't contain a flag or an instance message.",
     "Description": "Hides shouts and yells, unless they contain flag coordinates or 'switching instance' messages.\nUse /cleanhunt to turn on for a configurable amount of time (default 1 hour).\nUse /cleanhunt off to disable early.",
