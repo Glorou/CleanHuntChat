@@ -32,7 +32,8 @@ public sealed class Plugin : IDalamudPlugin
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
         ConfigWindow = new ConfigWindow(this);
         WindowSystem.AddWindow(ConfigWindow);
-
+        
+        
         commands = new List<ICommand>();
         InitializeCommands();
 
@@ -40,6 +41,10 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
 
         chatHandler = new ChatHandler();
+        if (Configuration.permanentFilter)
+        {
+            EnableChatHandler();
+        }
     }
 
     public void Dispose()
@@ -51,9 +56,8 @@ public sealed class Plugin : IDalamudPlugin
         {
             CommandManager.RemoveHandler(command.Name);
             command.Dispose();
-            commands.Remove(command);
         }
-
+        commands.Clear();
         DisableChatHandler();
     }
 

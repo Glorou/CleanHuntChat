@@ -35,8 +35,16 @@ namespace CleanHuntChat.Commands
         private void HandleMainCommand()
         {
             plugin.EnableChatHandler();
-            SetupNewTimer(timer);
-            Plugin.ChatGui.Print($"Enabled {Strings.PLUGIN_NAME} for {plugin.Configuration.EnabledDurationInMinutes} minutes.");
+            if (!plugin.Configuration.permanentFilter)
+            {
+                SetupNewTimer(timer);
+                Plugin.ChatGui.Print($"Enabled {Strings.PLUGIN_NAME} for {plugin.Configuration.EnabledDurationInMinutes} minutes.");
+            }
+            else
+            {
+                Plugin.ChatGui.Print($"Enabled {Strings.PLUGIN_NAME} permanently");
+            }
+
         }
         private void HandleOffSubCommand()
         {
