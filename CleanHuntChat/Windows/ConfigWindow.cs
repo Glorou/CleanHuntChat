@@ -2,7 +2,7 @@ using System;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 
-namespace SamplePlugin.Windows;
+namespace CleanHuntChat.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {

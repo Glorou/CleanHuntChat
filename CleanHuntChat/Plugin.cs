@@ -1,14 +1,14 @@
+using System.Collections.Generic;
+using CleanHuntChat.ChatHandlers;
+using CleanHuntChat.Commands;
+using CleanHuntChat.Windows;
 using Dalamud.Game.Command;
+using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using SamplePlugin.Windows;
-using SamplePlugin.Classes;
-using CleanHuntChat.Commands;
-using System.Collections.Generic;
 
-namespace SamplePlugin;
+namespace CleanHuntChat;
 
 public sealed class Plugin : IDalamudPlugin
 {
@@ -19,7 +19,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Configuration Configuration { get; init; }
 
-    public readonly WindowSystem WindowSystem = new("SamplePlugin");
+    public readonly WindowSystem WindowSystem = new("CleanHuntChat");
 
     private ConfigWindow ConfigWindow { get; init; }
 

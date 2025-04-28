@@ -1,4 +1,3 @@
-using SamplePlugin;
 using System;
 using System.Timers;
 
@@ -7,7 +6,7 @@ namespace CleanHuntChat.Commands
     public class CommandCleanHunt : ICommand
     {
         public string Name => "/cleanhunt";
-        public string HelpMessage => $"Temporarily turns {Strings.PLUGIN_NAME} on. Type '{Name} off' to disable early.";
+        public string HelpMessage => $"Temporarily turns {Strings.PLUGIN_NAME} on. Type '{Name} off' to disable early. If you have enabled the permanent chat filter option, you will need to use the command to turn it on for this session, afterwards it will start on game start.";
 
         private readonly Plugin plugin;
         private readonly Timer timer;

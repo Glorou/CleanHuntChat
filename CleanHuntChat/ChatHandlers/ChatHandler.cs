@@ -1,9 +1,9 @@
-using Dalamud.Game.Text;
-using Dalamud.Game.Text.SeStringHandling;
 using System;
 using System.Linq;
+using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
 
-namespace SamplePlugin.Classes
+namespace CleanHuntChat.ChatHandlers
 {
     internal class ChatHandler
     {
