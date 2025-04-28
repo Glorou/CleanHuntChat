@@ -2,7 +2,7 @@ using System;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 
-namespace SamplePlugin.Windows;
+namespace CleanHuntChat.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
@@ -26,10 +26,17 @@ public class ConfigWindow : Window, IDisposable
     public override void Draw()
     {
         var duration = configuration.EnabledDurationInMinutes;
+        var permSetting = configuration.permanentFilter;
+        if (ImGui.Checkbox("Have chat filtered permanently", ref permSetting))
+        {
+            configuration.permanentFilter = permSetting;
+            configuration.Save();
+        }
         if (ImGui.InputInt("Duration in minutes", ref duration))
         {
             configuration.EnabledDurationInMinutes = duration;
             configuration.Save();
         }
+
     }
 }

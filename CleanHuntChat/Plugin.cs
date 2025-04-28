@@ -1,14 +1,14 @@
+using System.Collections.Generic;
+using CleanHuntChat.ChatHandlers;
+using CleanHuntChat.Commands;
+using CleanHuntChat.Windows;
 using Dalamud.Game.Command;
+using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using SamplePlugin.Windows;
-using SamplePlugin.Classes;
-using CleanHuntChat.Commands;
-using System.Collections.Generic;
 
-namespace SamplePlugin;
+namespace CleanHuntChat;
 
 public sealed class Plugin : IDalamudPlugin
 {
@@ -19,7 +19,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Configuration Configuration { get; init; }
 
-    public readonly WindowSystem WindowSystem = new("SamplePlugin");
+    public readonly WindowSystem WindowSystem = new("CleanHuntChat");
 
     private ConfigWindow ConfigWindow { get; init; }
 
@@ -32,7 +32,8 @@ public sealed class Plugin : IDalamudPlugin
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
         ConfigWindow = new ConfigWindow(this);
         WindowSystem.AddWindow(ConfigWindow);
-
+        
+        
         commands = new List<ICommand>();
         InitializeCommands();
 
@@ -40,6 +41,10 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
 
         chatHandler = new ChatHandler();
+        if (Configuration.permanentFilter)
+        {
+            EnableChatHandler();
+        }
     }
 
     public void Dispose()
@@ -51,9 +56,8 @@ public sealed class Plugin : IDalamudPlugin
         {
             CommandManager.RemoveHandler(command.Name);
             command.Dispose();
-            commands.Remove(command);
         }
-
+        commands.Clear();
         DisableChatHandler();
     }
 
