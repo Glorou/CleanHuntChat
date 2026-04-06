@@ -12,8 +12,12 @@
         <OutputPath>C:\Users\Karou\AppData\Roaming\XIVLauncher\devPlugins\$(MSBuildProjectName)</OutputPath>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Update="DalamudPackager" Version="14.0.1" />
-      <PackageReference Update="DotNet.ReproducibleBuilds" Version="2.0.2" />
+      <PackageReference Remove="DalamudPackager" />
+      <PackageReference Remove="DotNet.ReproducibleBuilds" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="CleanHuntChat.json" />
+      <Content Include="packages.lock.json" />
     </ItemGroup>
     
 </Project>
